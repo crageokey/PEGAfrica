@@ -1,0 +1,25 @@
+--Wasted sales---
+
+select 
+date(closedat) as date_invoice,
+'Wasted sales' as journal_id,
+customerid as partner_id,
+accountnumber as "reference/description",
+'Wasted sales' as "invoice_line_ids/product_id",
+'Retour kit sous 45 jours' as "invoice_line_ids/name",
+701121 as "invoice_line_ids/account_id",
+product_price as "invoice_line_ids/price_unit",
+'TVA Discount' as "invoice_line_ids/invoice_line_tax_ids",
+productType as "invoice_line_ids/analytic_account"
+FROM public.dlight_mashup 
+where CountryId = 'CDI'
+and date_of_activity = '2022-05-30'
+and iswasted =1
+and customerstatus not in ('Cancelled', 'PAID_OFF')
+and contractid not in (
+select contractid from
+public.dlight_mashup
+where CountryId = 'CDI'
+and date_of_activity = '2022-02-28'
+and customerstatus not in ('Cancelled', 'PAID_OFF')
+and iswasted =1)

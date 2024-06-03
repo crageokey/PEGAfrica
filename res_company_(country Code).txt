@@ -1,0 +1,11 @@
+|id |name             |currency_id|
+|---|-----------------|-----------|
+|1  |PEG Sénégal      |41         |
+|2  |PEG Mali         |41         |
+|3  |PEG Côte d'Ivoire|41         |
+|4  |PEG Ghana        |114        |
+
+
+SELECT id, "name", currency_id
+FROM public.res_company
+WHERE id IN (1,2,3,4);

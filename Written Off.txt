@@ -1,0 +1,23 @@
+--Written off--
+select 
+date(closedat) as date_invoice,
+'Write off' as journal_id,
+customerid as partner_id,
+ContractId as "reference/description",
+'Write off' as "invoice_line_ids/product_id",
+'Perte sur retour de kit' as "invoice_line_ids/name",
+659410 as "invoice_line_ids/account_id",
+outstanding_balance as "invoice_line_ids/price_unit",
+'TVA Discount' as "invoice_line_ids/invoice_line_tax_ids",
+productType as "invoice_line_ids/analytic_account"
+FROM public.dlight_mashup 
+where Date_Of_Activity = '2022-05-30'
+AND DATE_PART(y, dateOfSale) >= '2018'
+and date(closedat) between '2022-03-01' and '2022-05-30'
+AND CountryId = 'CDI'
+AND Payment_Plan_Name NOT LIKE '%Demo%'
+AND CustomerStatus = 'Cancelled'
+AND CustomerStatus NOT LIKE 'PAID_OFF'
+and writtenoff = 'Written Off'
+and closedat is not null
+order by date(closedat)
